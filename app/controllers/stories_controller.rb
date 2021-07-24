@@ -1,4 +1,6 @@
 class StoriesController < ApplicationController
+  
+  
   before_action :set_story, only: [:show, :edit, :update, :destroy]
 
   # GET /stories
@@ -19,12 +21,22 @@ class StoriesController < ApplicationController
 
   # GET /stories/1/edit
   def edit
+    resultado = validate_edit(@story.id)
+    if !resultado
+      redirect_to root_path, notice: "You must be an admin or story owner to access this page."
+    end
+  end
+
+  def my_pictories
+    @stories = Story.where(user_id:[])
+
   end
 
   # POST /stories
   # POST /stories.json
   def create
     @story = Story.new(story_params)
+    @story.user_id = current_user.id
 
     respond_to do |format|
       if @story.save

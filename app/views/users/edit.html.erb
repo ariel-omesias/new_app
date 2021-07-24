@@ -1,0 +1,24 @@
+<h1>Editar</h1>
+
+Name: <%= @user.name %><br />
+Email: <%= @user.email %><br />
+
+
+<% if current_user.admin? %>
+    <%= form_with(model: @user, url: user_path, local: true) do |form| %>
+        <div class="field">
+            <%= form.label :admin %>
+            <%= form.check_box :admin %>
+        </div>
+        <div class="actions">
+            <%= form.submit %>
+        </div>
+    <% end %>
+<% end %>
+
+
+
+
+
+
+[Campo con el Admin]
